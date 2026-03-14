@@ -8,7 +8,7 @@ export default function SignupBtn(){
 
 
     return (
-        <button onClick={() => router.push("/signup")} className="cursor-pointer w-full">Singup</button>
+        <button onClick={() => router.push("/signup")} className="cursor-pointer w-full">Sing up</button>
     )
 
 

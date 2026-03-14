@@ -8,6 +8,6 @@ export default function LoginBtn(){
 
 
     return (
-        <button onClick={() => router.push("/signin")} className="cursor-pointer w-full">Signin</button>
+        <button onClick={() => router.push("/signin")} className="cursor-pointer w-full">Sign in</button>
     )
 }

@@ -58,7 +58,11 @@ export default function SigninForm () {
         },
         onSuccess: (data) => {
             console.log(data);
-            setLoading(false)
+
+            setTimeout(() => {
+                router.push("/dashboard")
+            }, 2000)
+            
         }
     })
 
