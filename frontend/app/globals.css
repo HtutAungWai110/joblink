@@ -126,9 +126,14 @@ button {
     @apply border-border outline-ring/50;
     }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground in-dark:bg-slate-950;
     }
   html {
     @apply font-sans;
     }
+  .nav_items {
+    @apply flex items-center gap-2 cursor-pointer rounded-2xl p-2 hover:opacity-70 text-[0.7em] sm:text-[1em]
+  }
+
+ 
 }

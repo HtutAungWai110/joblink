@@ -27,9 +27,6 @@ export default async function middleware(req: NextRequest){
         return NextResponse.redirect(new URL('/dashboard', req.url))
     }
 
-
-    
-
     
     if(!accessToken){
         
@@ -38,9 +35,9 @@ export default async function middleware(req: NextRequest){
             const refreshResponse = await fetch(`${process.env.API_URL}/token/refresh`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': "application/json"
+                    'Content-Type': "application/json",
+                    'Authorization': `Bearer ${refreshToken}`
                 },
-                body: JSON.stringify({refreshToken})
             })
 
 

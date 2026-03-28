@@ -8,9 +8,30 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  username  String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  id                  String         @id @default(uuid())
+  username            String
+  email               String         @unique
+  password            String
+  createdAt           DateTime       @default(now())
+  lockout_time        DateTime?
+  login_fail_attempts Int            @default(0)
+  updatedAt           DateTime       @default(now())
+  Applications        Applications[]
+}
+
+model Applications {
+  id              String            @id
+  companyName     String
+  companyEmail    String            @unique
+  applier         String
+  applicationDate DateTime          @default(now())
+  lastUpdated     DateTime          @default(now())
+  status          ApplicationStatus @default(IN_PROGRESS)
+  User            User              @relation(fields: [applier], references: [id], onDelete: Cascade)
+}
+
+enum ApplicationStatus {
+  IN_PROGRESS
+  INTERVIEW
+  REJECTED
 }

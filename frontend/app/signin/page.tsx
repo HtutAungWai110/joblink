@@ -14,6 +14,8 @@ export default function SignupPage(){
                 <p>Do not have an account?</p>
                 <Link href={"/signup"} className="hover:text-cyan-500">sign up here</Link>
             </div>
+
+           
         </div>
     )
 }

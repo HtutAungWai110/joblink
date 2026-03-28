@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "lockout_time" TIMESTAMP(3),
+ADD COLUMN     "login_fail_attempts" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
