@@ -78,9 +78,30 @@ async function login (req, res){
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid){
-        return res.status(404).json({
-            message: "Invalid email or password"
-        });
+        await prisma.user.update({
+            where: {email: email},
+            data: {
+                login_fail_attempts: user.login_fail_attempts + 1
+            }
+        })
+
+        if(user.login_fail_attempts + 1 >= 5){
+            await prisma.user.update({
+                where: {email: email},
+                data: {
+                    lockoutUntil: new Date(Date.now() + 15 * 60 * 1000)
+                }
+            })
+
+
+            return res.status(403).json({
+                message: `Account locked due to multiple failed login attempts. Try again after 15 minutes.`
+            })
+        } else {
+            return res.status(404).json({
+                message: "Invalid email or password"
+            });
+        }
     }
 
     const accessToken = generateAccessToken(user.id);

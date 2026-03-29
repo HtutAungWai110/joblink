@@ -13,9 +13,9 @@ model User {
   email               String         @unique
   password            String
   createdAt           DateTime       @default(now())
-  lockout_time        DateTime?
   login_fail_attempts Int            @default(0)
   updatedAt           DateTime       @default(now())
+  lockoutUntil        DateTime?
   Applications        Applications[]
 }
 

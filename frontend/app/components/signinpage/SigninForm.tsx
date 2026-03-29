@@ -84,8 +84,8 @@ export default function SigninForm () {
              bg-white in-dark:bg-gray-800 in-dark:border-cyan-200"
             initial={{opacity: 0}} animate={{opacity: 80}} transition={{duration: 0.5}}
             >
-                <FaExclamationTriangle></FaExclamationTriangle>
-                <p>{error}</p>
+                <FaExclamationTriangle className="text-[30px]"></FaExclamationTriangle>
+                <p className="text-[1em]" >{error}</p>
                 
             </Motion>
         }
