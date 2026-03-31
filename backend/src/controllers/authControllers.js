@@ -104,13 +104,27 @@ async function login (req, res){
         }
     }
 
-    const accessToken = generateAccessToken(user.id);
-    const refreshToken = generateRefreshToken(user.id);
 
-    return res.status(200).json({
-        accessToken,
-        refreshToken
-    })
+    if (isPasswordValid){
+        if (user.login_fail_attempts > 0){
+            await prisma.user.update({
+                where: {email: email},
+                data: {
+                    login_fail_attempts: 0
+                }
+            })
+        }
+
+        const accessToken = generateAccessToken(user.id);
+        const refreshToken = generateRefreshToken(user.id);
+
+        return res.status(200).json({
+            accessToken,
+            refreshToken
+        })
+    }
+
+    
 
 
 }

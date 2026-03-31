@@ -1,4 +1,4 @@
-import ThemeToggle from "./components/themeBtn";
+
 import Motion from "./components/Animation";
 import SequentialAnimate from "./components/SequentialAnimate";
 import LoginBtn from "./components/landingpage/NavigateLogin";
@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <main>
       <section>
-        <ThemeToggle/>
+     
         <div className="absolute left-[50%] top-[50%] -translate-[50%] rounded-2xl">
           <SequentialAnimate stagger={0.3}>
             <Motion variants={appearRight} transition={{duration: 0.5}}>

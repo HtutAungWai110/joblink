@@ -7,7 +7,7 @@ export async function refreshToken(req, res){
         try {
         const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
 
-        const id = {decoded};
+        const id = decoded.id;
 
         const accessToken = generateAccessToken(id);
 

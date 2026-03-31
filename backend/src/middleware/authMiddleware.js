@@ -1,32 +1,30 @@
-import { prisma } from "../lib/db.js"
+import jwt from "jsonwebtoken";
 
-const authMiddleware = async (req, res, next) => {
-    const {email, password} = req.body;
+export default function authMiddleware(req, res, next){
+    const authHeader = req.headers.authorization;
 
-    const user = await prisma.user.findUnique({
-        where: {email: email}
-    })
-
-    if(user.lockoutUntil &&  user.lockoutUntil > new Date()){
-        return res.status(403).json({
-            message: `Account temporarily locked! Try again after ${Math.ceil((user.lockoutUntil - new Date()) / (1000 * 60))} minnutes.`
-        })
-    } else if (user.lockoutUntil && user.lockoutUntil <= new Date()){
-        await prisma.user.update({
-            where: {email: email},
-            data: {
-                lockoutUntil: null,
-                login_fail_attempts: 0
-            }
-        })
-
-        
+    if(!authHeader){
+        return res.status(401).json({message: "Unauthorized"})
     }
 
-    next();
-    
 
-    
+    let token;
+
+    if(authHeader && authHeader.startsWith("Bearer")){
+        token = authHeader.split(" ")[1];
+    }
+
+    if(!token){
+        return res.status(401).json({message: "Unauthorized"})
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        req.user = {...decoded};
+        console.log("Decoded user from token:", token);
+        next();
+    } catch (e){
+        return res.status(401).json({message: "Unauthorized"})
+    }
 }
-
-export {authMiddleware};

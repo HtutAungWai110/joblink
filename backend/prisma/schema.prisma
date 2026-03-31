@@ -20,13 +20,14 @@ model User {
 }
 
 model Applications {
-  id              String            @id
+  id              String            @id @default(uuid())
   companyName     String
-  companyEmail    String            @unique
-  applier         String
+  companyEmail    String
+  applier         String           
   applicationDate DateTime          @default(now())
   lastUpdated     DateTime          @default(now())
   status          ApplicationStatus @default(IN_PROGRESS)
+  position        String
   User            User              @relation(fields: [applier], references: [id], onDelete: Cascade)
 }
 
