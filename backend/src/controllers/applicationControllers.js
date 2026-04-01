@@ -1,4 +1,3 @@
-import { application } from "express";
 import { prisma } from "../lib/db.js"
 async function addApplication(req, res) {
     const {id}  = req.user;
@@ -33,4 +32,23 @@ async function addApplication(req, res) {
     
 }
 
-export {addApplication}
+async function getAllApplications(req, res) {
+    const { id } = req.user;
+
+    try {
+        const applications = await prisma.applications.findMany({
+            where: { applier: id }
+        });
+
+        return res.status(200).json({
+            message: "Applications fetched successfully!",
+            applications
+        });
+    } catch (e) {
+        return res.status(500).json({
+            message: e.message
+        });
+    }
+}
+
+export { addApplication, getAllApplications }

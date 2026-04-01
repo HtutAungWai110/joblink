@@ -22,3 +22,21 @@ export async function POST(req: NextRequest, res: NextResponse){
     return NextResponse.json(data, { status: 200 })
 
 }
+
+export async function GET(req: NextRequest, res: NextResponse){
+    const response = await proxyFetch(`${process.env.API_URL}/application/all`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    if(!response.ok){
+        const error = await response.json();
+        return NextResponse.json({ message: error.message }, { status: response.status })
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data, { status: 200 })
+
+}
